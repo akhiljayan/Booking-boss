@@ -1,46 +1,32 @@
-#Booking-boss Test : Rest web service using Spring Boot
+# Booking-boss Test : Rest web service using Spring Boot
 
-#API's
-
-Add list of products
-
+### API's
+1.Add list of products.
+  - POST ("/api/save-products")
+  - @param : List<ProductDto> (@RequestBody)
+```sh
+[{
+    "name": "",
+    "unitPrice": "",
+    "eventCollection" : [] (Empty while initial creation)
+}]
+```
 ##
-POST ("/api/save-products")
-
-##
-@param : List<ProductDto> (@RequestBody)
-
-##
-'[{'
-
-##
-    '"name": "",'
-
-##
-    '"unitPrice": "",'
-
-##
-    '"eventCollection" : [] (Empty while initial creation)'
-
-##
-'}]'
-
-##
-
-
-Add list of Events
-POST ("/api/save-events")
-@param : List<EventDto> (@RequestBody)
+2.Add list of Events.
+  - POST ("/api/save-events")
+  - @param : List<EventDto> (@RequestBody)
+```sh
 [{
     "name": "",
     "eventDate": "",
     "productCollection" : []  (Empty while initial creation)
 }]
-
-
-Put products to event
-POST("/api/put-products")
-@Param: EventDto (@RequestBody)
+```
+##
+3.Put products to event.
+  - POST("/api/put-products")
+  - @Param: EventDto (@RequestBody)
+```sh
 {
   "id": "(string) unique id of the event",
   "timestamp": "(timestamp) utc timestamp of the event",
@@ -53,15 +39,14 @@ POST("/api/put-products")
     }
   ]
 }
+```
+##
+4.Get Event details from id.
+  - GET("/event/{id}")
+  - @Param: id (PathVariable)
 
 
-
-Get Event details from id
-GET("/event/{id}")
-@Param: id (PathVariable)
-
-
-Get Event details from name
-GET("/event/{name}")
-@Param: name (PathVariable)
-
+##
+5.Get Event details from name.
+  - GET("/event/{name}")
+  - @Param: name (PathVariable)
