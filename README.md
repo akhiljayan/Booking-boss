@@ -1,15 +1,31 @@
-Booking-boss Test : Rest web service using Spring Boot
+#Booking-boss Test : Rest web service using Spring Boot
 
-API's
+#API's
 
 Add list of products
+
+##
 POST ("/api/save-products")
+
+##
 @param : List<ProductDto> (@RequestBody)
-[{
-    "name": "",
-    "unitPrice": "",
-    "eventCollection" : [] (Empty while initial creation)
-}]
+
+##
+'[{'
+
+##
+    '"name": "",'
+
+##
+    '"unitPrice": "",'
+
+##
+    '"eventCollection" : [] (Empty while initial creation)'
+
+##
+'}]'
+
+##
 
 
 Add list of Events
