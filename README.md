@@ -1,6 +1,7 @@
 # Booking-boss Test : Rest web service using Spring Boot
 
 ### API's
+##
 1.Add list of products.
   - POST ("/api/save-products")
   - @param : List<ProductDto> (@RequestBody)
@@ -50,3 +51,10 @@
 5.Get Event details from name.
   - GET("/event/{name}")
   - @Param: name (PathVariable)
+##
+### Summary
+- Spring Boot
+- Hybernate
+- JPA
+- MySql 
+- DB: products_schema
