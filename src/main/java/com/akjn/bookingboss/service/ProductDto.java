@@ -15,13 +15,19 @@ public class ProductDto {
     private Long productId;
     private String name;
     private Double unitPrice;
+    private Integer quantity;
     private Collection<EventProductsDto> eventCollection;
+    private Double totalCost;
 
-    public ProductDto(Long productId, String name, Double unitPrice, Collection<EventProductsDto> eventCollection) {
+    public ProductDto(Long productId, String name, Double unitPrice, Integer quantity) {
         this.productId = productId;
         this.name = name;
         this.unitPrice = unitPrice;
-        this.eventCollection = eventCollection;
+        if (quantity != null) {
+            this.totalCost = unitPrice * quantity;
+        } else {
+            this.totalCost = null;
+        }
     }
 
     public ProductDto() {
@@ -57,6 +63,22 @@ public class ProductDto {
 
     public void setEventCollection(Collection<EventProductsDto> eventCollection) {
         this.eventCollection = eventCollection;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(Double totalCost) {
+        this.totalCost = totalCost;
     }
     
     

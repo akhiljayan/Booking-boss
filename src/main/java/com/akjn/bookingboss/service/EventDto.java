@@ -17,11 +17,11 @@ public class EventDto {
     private Long eventId;
     private String name;
     private Date eventDate;
-    private Collection<EventProductsDto> productCollection;
+    private Collection<ProductDto> productCollection;
     
     
 
-    public EventDto(Long eventId,String name, Date eventDate, Collection<EventProductsDto> productCollection) {
+    public EventDto(Long eventId,String name, Date eventDate, Collection<ProductDto> productCollection) {
         this.eventId = eventId;
         this.name = name;
         this.eventDate = eventDate;
@@ -55,11 +55,11 @@ public class EventDto {
         this.eventDate = eventDate;
     }
 
-    public Collection<EventProductsDto> getProductCollection() {
+    public Collection<ProductDto> getProductCollection() {
         return productCollection;
     }
 
-    public void setProductCollection(Collection<EventProductsDto> productCollection) {
+    public void setProductCollection(Collection<ProductDto> productCollection) {
         this.productCollection = productCollection;
     }
 

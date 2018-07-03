@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +63,8 @@ public class EventAppService implements IEventAppService {
     public String putProductsToCurrentEvent(EventDto event) {
         Events e = eventRepository.findById(event.getEventId()).orElseThrow(() -> new ResourceNotFoundException("Event", "id", event.getEventId()));
         event.getProductCollection().forEach((product) -> {
-            EventProducts evpr = new EventProducts(e, product.getProduct(), product.getProductQuantity());
+            Products p = productRepository.findById(product.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Product", "id", product.getProductId()));
+            EventProducts evpr = new EventProducts(e, p, product.getQuantity());
             eventProductRepository.save(evpr);
         });
         return "Products Added Successfully";
@@ -70,7 +73,7 @@ public class EventAppService implements IEventAppService {
     @Override
     public ProductDto ctrateProduct(ProductDto product) {
         Products p = productRepository.save(this.mapProductDtoToDomain(product));
-        return mapToProductDto(p);
+        return mapToProductDto(p, null);
     }
     
     @Override
@@ -78,7 +81,7 @@ public class EventAppService implements IEventAppService {
         List<Products> prodts = productRepository.findAll();
         List<ProductDto> dtoList = new ArrayList<>();
         prodts.forEach((p) -> {
-            dtoList.add(mapToProductDto(p));
+            dtoList.add(mapToProductDto(p, null));
         });
         return dtoList;
     }
@@ -92,18 +95,15 @@ public class EventAppService implements IEventAppService {
     }
     
     public Events mapToEventDomain(EventDto dto){
-        Collection<EventProducts> eventProduct = new ArrayList<>();
-        dto.getProductCollection().forEach((epdto) -> {
-            eventProduct.add(mapToEventProductsDomain(epdto));
-        });
-        Events e = new Events(dto.getName(), dto.getEventDate(), eventProduct);
+        List<EventProducts> ep = eventProductRepository.findAll().stream().filter(n -> Objects.equals(n.getEvent().getEventId(), dto.getEventId())).collect(Collectors.toList());
+        Events e = new Events(dto.getName(), dto.getEventDate(), ep);
         return e;
     }
     
     public EventDto mapToEventDto(Events event){
-        Collection<EventProductsDto> eventProductDto = new ArrayList<>();
+        Collection<ProductDto> eventProductDto = new ArrayList<>();
         event.getProductCollection().forEach((epdto) -> {
-            eventProductDto.add(mapToEventProductsDto(epdto));
+            eventProductDto.add(mapToProductDto(epdto.getProduct(), epdto.getProductQuantity()));
         });
         return new EventDto(event.getEventId(),event.getName(),event.getEventDate(),eventProductDto);
     }
@@ -116,12 +116,8 @@ public class EventAppService implements IEventAppService {
         return new Products(dto.getName(), dto.getUnitPrice(),eventProduct);
     }
     
-    public ProductDto mapToProductDto(Products pdt){
-        Collection<EventProductsDto> eventProductDto = new ArrayList<>();
-        pdt.getEventCollection().forEach((epdto) -> {
-            eventProductDto.add(mapToEventProductsDto(epdto));
-        });
-        return new ProductDto(pdt.getProductId(), pdt.getName(), pdt.getUnitPrice(), eventProductDto);
+    public ProductDto mapToProductDto(Products pdt, Integer quantity){
+        return new ProductDto(pdt.getProductId(), pdt.getName(), pdt.getUnitPrice(),quantity);
     }
     
 
