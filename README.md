@@ -29,16 +29,17 @@
   - @Param: EventDto (@RequestBody)
 ```sh
 {
-  "id": "(string) unique id of the event",
-  "timestamp": "(timestamp) utc timestamp of the event",
-  "products": [
-    {
-      "id": "(long) id of the product",
-      "name": "(string) name of the product",
-      "quantity": "(integer) quantity of the product",
-      "sale_amount": "(double) total sale amount"
-    }
-  ]
+    "eventId": "(string) unique id of the event",
+    "name": "(string) name of the event",
+    "eventDate": "(timestamp) utc timestamp of the event",
+    "productCollection": [
+		{
+	        "productId": "(long) id of the product",
+	        "name": "(string) name of the product",
+	        "quantity": "(integer) quantity of the product"
+		}
+		...
+	]
 }
 ```
 ##
